@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -13,9 +14,12 @@ public class PlayerControl : MonoBehaviour
 
     public bool viewCursor = true;
 
+    public float playerHp;
 
     void Start()
     {
+        playerHp = 200;
+
         if (viewCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -61,4 +65,17 @@ public class PlayerControl : MonoBehaviour
         }
 
     }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("enemy"))
+        {
+            playerHp = playerHp - 50;
+            if(playerHp < 0)
+            {
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+    }
+
 }

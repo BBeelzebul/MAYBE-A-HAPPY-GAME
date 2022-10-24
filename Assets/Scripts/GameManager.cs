@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         if(remainingTime == 0)
         {
-            gameStart();
+            SceneManager.LoadScene("GameOver");
         }
         if(totalEnemies == 0)
         {
