@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,11 +9,34 @@ public class GameManager : MonoBehaviour
 {
     public GameObject Player;
     public GameObject Enemy;
-    private List<GameObject> enemyList = new List<GameObject>();
-    float remainingTime;
+
+    public List<GameObject> enemyList = new List<GameObject>();
     public Vector3[] enemiesPosition;
 
+    float remainingTime;
+    public int totalEnemies;
 
+    public TextMeshProUGUI timeLeft;
+    public TextMeshProUGUI enemiesLeft;
+
+    
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get 
+        {
+            if(_instance == null)
+            {
+                Debug.LogError("Instance exists");
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     void Start()
     {
@@ -24,6 +48,10 @@ public class GameManager : MonoBehaviour
         if(remainingTime == 0)
         {
             gameStart();
+        }
+        if(totalEnemies == 0)
+        {
+            SceneManager.LoadScene("Win");
         }
     }
 
@@ -43,18 +71,28 @@ public class GameManager : MonoBehaviour
         enemyList.Add(Instantiate(Enemy, enemiesPosition[1], Quaternion.identity));
         enemyList.Add(Instantiate(Enemy, enemiesPosition[2], Quaternion.identity));
 
-        StartCoroutine(startTime(30));
+        totalEnemies = enemyList.Count;
+        enemiesLeft.text = $"Enemies: {totalEnemies}";
+
+        StartCoroutine(startTime(15));
        
     }
 
-    public IEnumerator startTime(float timeValue = 30)
+    public void enemyCount()
+    {
+        totalEnemies--;
+        enemiesLeft.text = $"Enemies: {totalEnemies}";
+    }
+
+
+    public IEnumerator startTime(float timeValue = 15)
     {
         remainingTime = timeValue;
         while (remainingTime > 0)
         {
-            Debug.Log("Restan" + remainingTime + "segundos.");
+            timeLeft.text = $"Time: {remainingTime}";
             yield return new WaitForSeconds(1.0f);
-            remainingTime--;
+            remainingTime--;           
         }
     }
 }

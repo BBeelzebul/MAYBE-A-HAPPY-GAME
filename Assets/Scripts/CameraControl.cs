@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    Vector2 mouseMovement;
+    Vector2 mouseMovement = new Vector2(-90, 0);
     Vector2 smoothnessV;
 
     public float sensibility;

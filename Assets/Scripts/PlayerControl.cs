@@ -8,10 +8,19 @@ public class PlayerControl : MonoBehaviour
     public Camera firstPersonCamera;
 
     public GameObject Bullet;
+    public float bulletForce;
+    public Transform spawnPosition;
+
+    public bool viewCursor = true;
+
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        if (viewCursor)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            viewCursor = false;
+        }       
     }
 
 
@@ -27,37 +36,28 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKeyDown("escape"))
         {
-            Cursor.lockState = CursorLockMode.None;
+            if (!viewCursor)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                viewCursor = true;
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = firstPersonCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hit;
-
-            GameObject pro;
-            pro = Instantiate(Bullet, ray.origin, transform.rotation);
-
-            Rigidbody rb = pro.GetComponent<Rigidbody>();
-            rb.AddForce(firstPersonCamera.transform.forward * 15, ForceMode.Impulse);
-
-            Destroy(pro, 5);
-
-            if((Physics.Raycast(ray, out hit) == true) && hit.distance < 5)
+            if (viewCursor)
             {
-
-                if(hit.collider.name.Substring(0, 3) == "Enemy")
-                {
-                    GameObject touchedObject = GameObject.Find(hit.transform.name);
-                    EnemyControl scriptTouchedObject = (EnemyControl)touchedObject.GetComponent(typeof(EnemyControl));
-
-                    if(scriptTouchedObject != null)
-                    {
-                        scriptTouchedObject.reciveDmg();
-                    }
-
-                }
+                Cursor.lockState = CursorLockMode.Locked;
+                viewCursor = false;
             }
+
+            GameObject bulletClone = Instantiate(Bullet, spawnPosition.position, spawnPosition.rotation);
+
+            Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
+
+            rb.AddRelativeForce(Vector3.up * bulletForce, ForceMode.Impulse);
+
+            Destroy(bulletClone, 5);
         }
 
     }

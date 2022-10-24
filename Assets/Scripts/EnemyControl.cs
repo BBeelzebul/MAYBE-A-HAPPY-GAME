@@ -19,7 +19,8 @@ public class EnemyControl : MonoBehaviour
         hp = hp - 25;
         if (hp < 0)
         {
-            this.enemyDie();
+            GameManager.Instance.enemyCount();
+            Destroy(gameObject);
         }
     }
 
@@ -27,11 +28,6 @@ public class EnemyControl : MonoBehaviour
     {
         transform.LookAt(player.transform);
         transform.Translate(velocity * Vector3.forward * Time.deltaTime);
-    }
-
-    private void enemyDie()
-    {
-        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
