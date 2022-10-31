@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1615097216}
-  Enemy: {fileID: 8641867641247201769, guid: af32bd2a813531c408ad09e43b6c3e85, type: 3}
+  Enemy: {fileID: 2105017252774571583, guid: d782e17c0171338438154fb74eb441f5, type: 3}
   enemyList: []
   enemiesPosition:
   - {x: -11, y: 0.74, z: 11}
@@ -430,7 +430,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 758845911}
   m_LocalRotation: {x: 0.000000110827386, y: -0.000000059604645, z: 0.9999574, w: -0.00923892}
-  m_LocalPosition: {x: 0.0000016537707, y: -1.1779997, z: 0}
+  m_LocalPosition: {x: -1.5846115, y: -2.148706, z: 0.91765445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -880,6 +880,7 @@ MonoBehaviour:
   bulletForce: 50
   spawnPosition: {fileID: 758845912}
   viewCursor: 1
+  playerHp: 0
 --- !u!136 &1615097218
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1049,7 +1050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1967555270
 Transform:
   m_ObjectHideFlags: 0
