@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -13,12 +14,27 @@ public class PlayerControl : MonoBehaviour
     public Transform spawnPosition;
 
     public bool viewCursor = true;
+    public bool isGrounded;
 
-    public float playerHp;
+    public float health;
+    public float maxHealth;
+    public float jump;
+
+    private Rigidbody playerRb;
+
+    public GameObject healthBarUI;
+
+    public Slider slider;
+
+    private void Awake()
+    {
+        playerRb = GetComponent<Rigidbody>();
+    }
 
     void Start()
     {
-        playerHp = 200;
+        health = maxHealth;
+        slider.value = CalculateHealth();
 
         if (viewCursor)
         {
@@ -64,18 +80,40 @@ public class PlayerControl : MonoBehaviour
             Destroy(bulletClone, 5);
         }
 
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            playerRb.AddForce(Vector3.up * jump);
+            isGrounded = false;
+        }
+
+        slider.value = CalculateHealth();
+
+        if (health < maxHealth)
+        {
+            healthBarUI.SetActive(true);
+        }
+
+        if (health <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
+    }
+
+    float CalculateHealth()
+    {
+        return health / maxHealth;
     }
 
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("enemy"))
         {
-            playerHp = playerHp - 50;
-            if(playerHp < 0)
-            {
-                SceneManager.LoadScene("GameOver");
-            }
+            health = health - 25;
+        }
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            isGrounded = true;
         }
     }
-
 }
