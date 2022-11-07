@@ -1352,7 +1352,6 @@ GameObject:
   - component: {fileID: 8009449216450666356}
   - component: {fileID: 1033158983385488294}
   - component: {fileID: 96847704197944812}
-  - component: {fileID: 5327930528283583136}
   m_Layer: 0
   m_Name: Dementor (2)
   m_TagString: enemy
@@ -1367,16 +1366,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7236324783294694862}
-  m_LocalRotation: {x: -0.73842525, y: 0.048081893, z: 0.075173385, w: 0.66840506}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalRotation: {x: -0.71416247, y: 0.050727524, z: 0.07341406, w: 0.69426876}
+  m_LocalPosition: {x: -0.0031993538, y: -0.014944822, z: -0.020473719}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6704308159502726744}
   - {fileID: 1443626022942058149}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -96.086, y: 26.158997, z: -16.14502}
+  m_LocalEulerAnglesHint: {x: -92.445, y: 53.79, z: -43.716003}
 --- !u!114 &1033158983385488294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,7 +1389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rutine: 0
-  velocity: 4
+  velocity: 10
   cronometro: 0
   grade: 0
   health: 0
@@ -1412,18 +1411,6 @@ CapsuleCollider:
   m_Height: 187.80586
   m_Direction: 2
   m_Center: {x: 1.5, y: 24.69, z: 29.964552}
---- !u!114 &5327930528283583136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7236324783294694862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76ac5240960252e48b3680cc5c9efa8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7675581421921652290
 GameObject:
   m_ObjectHideFlags: 0

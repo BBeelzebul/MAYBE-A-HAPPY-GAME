@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -66,31 +67,31 @@ public class GameManager : MonoBehaviour
             }         
         }
 
-
-        enemyList.Add(Instantiate(Enemy, enemiesPosition[0], Quaternion.identity));
-        enemyList.Add(Instantiate(Enemy, enemiesPosition[1], Quaternion.identity));
-        enemyList.Add(Instantiate(Enemy, enemiesPosition[2], Quaternion.identity));
+        for (int i = 0; i < 20; i++)
+        {
+            enemyList.Add(Instantiate(Enemy, enemiesPosition[i], Quaternion.identity));
+        }
 
         totalEnemies = enemyList.Count;
-        enemiesLeft.text = $"Enemies: {totalEnemies}";
+        enemiesLeft.text = $"{totalEnemies}";
 
-        StartCoroutine(startTime(15));
+        StartCoroutine(startTime(180));
        
     }
 
     public void enemyCount()
     {
         totalEnemies--;
-        enemiesLeft.text = $"Enemies: {totalEnemies}";
+        enemiesLeft.text = $"{totalEnemies}";
     }
 
 
-    public IEnumerator startTime(float timeValue = 15)
+    public IEnumerator startTime(float timeValue = 180)
     {
         remainingTime = timeValue;
         while (remainingTime > 0)
         {
-            timeLeft.text = $"Time: {remainingTime}";
+            timeLeft.text = $"{remainingTime}";
             yield return new WaitForSeconds(1.0f);
             remainingTime--;           
         }

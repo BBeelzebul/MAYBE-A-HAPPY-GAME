@@ -55,7 +55,7 @@ public class EnemyControl : MonoBehaviour
 
     public void ComportamientoEnemigo()
     {
-        if(Vector3.Distance(transform.position, player.transform.position) > 15)
+        if(Vector3.Distance(transform.position, player.transform.position) > 50)
         {
             cronometro += 1 * Time.deltaTime;
             if (cronometro >= 4)
@@ -87,7 +87,7 @@ public class EnemyControl : MonoBehaviour
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
-            transform.Translate(Vector3.forward * 2 * Time.deltaTime);
+            transform.Translate(Vector3.forward * 4 * Time.deltaTime);
         }
        
     }
