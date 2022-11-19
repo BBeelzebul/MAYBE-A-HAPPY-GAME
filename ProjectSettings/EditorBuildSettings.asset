@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 407acee82973cc940abdd2c0c464d4dd
   - enabled: 1
-    path: Assets/Scenes/FPSMinigame.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Level1.unity
+    guid: 8209ed0b32075ed4ab5cf2d02dbf24b5
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 48beb5e4b14caeb4f986ff4b243c890a
@@ -20,7 +20,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScreenLVL2.unity
     guid: 509c37bfeff5a444aa581432eb18ba99
-  - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: 8209ed0b32075ed4ab5cf2d02dbf24b5
   m_configObjects: {}

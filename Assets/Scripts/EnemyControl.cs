@@ -20,12 +20,15 @@ public class EnemyControl : MonoBehaviour
 
     public Slider slider;
 
+    private Animator animEnemy;
+
     void Start()
     {
         health = maxHealth;
         slider.value = CalculateHealth();
 
         player = GameObject.Find("Player");
+        animEnemy = GetComponent<Animator>();
     }
 
    
@@ -66,6 +69,7 @@ public class EnemyControl : MonoBehaviour
             switch (rutine)
             {
                 case 0:
+                    
                     break;
 
                 case 1:
