@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemyList = new List<GameObject>();
     public Vector3[] enemiesPosition;
 
-    float remainingTime;
+    public float remainingTime;
     public int totalEnemies;
+    private int minutes, seconds;
 
     public TextMeshProUGUI timeLeft;
     public TextMeshProUGUI enemiesLeft;
@@ -46,6 +47,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        remainingTime -= Time.deltaTime;
+
+        if(remainingTime < 0) remainingTime = 0;
+
+        minutes = (int)(remainingTime / 60f);
+        seconds = (int)(remainingTime - minutes * 60);
+
+        timeLeft.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+
         if(remainingTime == 0)
         {
             SceneManager.LoadScene("GameOver");
@@ -74,8 +85,6 @@ public class GameManager : MonoBehaviour
 
         totalEnemies = enemyList.Count;
         enemiesLeft.text = $"{totalEnemies}";
-
-        StartCoroutine(startTime(180));
        
     }
 
@@ -85,15 +94,4 @@ public class GameManager : MonoBehaviour
         enemiesLeft.text = $"{totalEnemies}";
     }
 
-
-    public IEnumerator startTime(float timeValue = 180)
-    {
-        remainingTime = timeValue;
-        while (remainingTime > 0)
-        {
-            timeLeft.text = $"{remainingTime}";
-            yield return new WaitForSeconds(1.0f);
-            remainingTime--;           
-        }
-    }
 }

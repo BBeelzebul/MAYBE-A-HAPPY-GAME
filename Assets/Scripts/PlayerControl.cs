@@ -60,7 +60,7 @@ public class PlayerControl : MonoBehaviour
     {
         cdBullet -= Time.deltaTime;
 
-        float movementX = Input.GetAxis("Vertical") * velocityMovement;
+        float movementX = Input.GetAxis("Vertical") * velocityMovement; 
         float movementZ = Input.GetAxis("Horizontal") * velocityMovement;
 
         movementX *= Time.deltaTime;
@@ -68,22 +68,19 @@ public class PlayerControl : MonoBehaviour
 
         transform.Translate(movementZ, 0, movementX);
 
-        //if((movementX != 0 || movementZ != 0) && isGrounded)
+        //if ((movementX != 0 || movementZ != 0) && isGrounded)
         //{
-        //    playerAudioSource.Play();
+        //    playerAudioSource.Play(footsteps);
         //}
         //else
         //{
         //    playerAudioSource.Stop();
         //}
 
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            if (!viewCursor)
-            {
-                Cursor.lockState = CursorLockMode.None;
-                viewCursor = true;
-            }
+            playerRb.AddForce(Vector3.up * jump);
+            isGrounded = false;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
@@ -107,10 +104,13 @@ public class PlayerControl : MonoBehaviour
             BulletInstance();
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetKeyDown("escape"))
         {
-            playerRb.AddForce(Vector3.up * jump);
-            isGrounded = false;
+            if (!viewCursor)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                viewCursor = true;
+            }
         }
 
         slider.value = CalculateHealth();

@@ -22,11 +22,14 @@ public class EnemyControl : MonoBehaviour
 
     private Animator animEnemy;
 
+    private Rigidbody enemyRb;
+
     void Start()
     {
         health = maxHealth;
         slider.value = CalculateHealth();
 
+        enemyRb = GetComponentInChildren<Rigidbody>();
         player = GameObject.Find("Player");
         animEnemy = GetComponent<Animator>();
     }
