@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class EnemyControl : MonoBehaviour
 {
     public int rutine;
-    public int velocity;
 
     public float cronometro;
     public float grade;
     public float health;
     public float maxHealth;
+
+    public bool attacking;
 
     public Quaternion angle;
 
@@ -24,14 +26,18 @@ public class EnemyControl : MonoBehaviour
 
     private Rigidbody enemyRb;
 
+    private NavMeshAgent enemyAgent;
+
     void Start()
     {
         health = maxHealth;
         slider.value = CalculateHealth();
 
+        enemyAgent = GetComponent<NavMeshAgent>();
         enemyRb = GetComponentInChildren<Rigidbody>();
-        player = GameObject.Find("Player");
         animEnemy = GetComponent<Animator>();
+
+        player = GameObject.Find("Player");
     }
 
    
@@ -48,6 +54,7 @@ public class EnemyControl : MonoBehaviour
         if (health <= 0)
         {
             GameManager.Instance.enemyCount();
+            animEnemy.SetTrigger("dying");
             Destroy(gameObject);
         }
 
@@ -72,7 +79,7 @@ public class EnemyControl : MonoBehaviour
             switch (rutine)
             {
                 case 0:
-                    
+                    animEnemy.SetBool("walking", false);                      
                     break;
 
                 case 1:
@@ -84,19 +91,40 @@ public class EnemyControl : MonoBehaviour
                 case 2:
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, angle, 0.5f);
                     transform.Translate(Vector3.forward * 1 * Time.deltaTime);
+                    animEnemy.SetBool("walking", true);
                     break;
 
             }
         }
         else
         {
-            var lookPos = player.transform.position - transform.position;
-            lookPos.y = 0;
-            var rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
-            transform.Translate(Vector3.forward * 4 * Time.deltaTime);
+            if(Vector3.Distance(transform.position, player.transform.position) > 5 && !attacking)
+            {
+                var lookPos = player.transform.position - transform.position;
+                lookPos.y = 0;
+                var rotation = Quaternion.LookRotation(lookPos);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, 2);
+                enemyAgent.SetDestination(player.transform.position);
+                animEnemy.SetBool("walking", true);
+                animEnemy.SetBool("attack", false);
+            }
+            else
+            {
+                animEnemy.SetBool("walking", false);
+                animEnemy.SetBool("attack", true);
+                attacking = true;
+            }
+         
         }
        
+    }
+
+    public void EndAnimation()
+    {
+        Debug.Log("Evento activado");
+        animEnemy.SetBool("walking", true);
+        animEnemy.SetBool("attack", false);
+        attacking = false;
     }
 
     private void OnCollisionEnter(Collision collision)
