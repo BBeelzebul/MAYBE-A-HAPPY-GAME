@@ -12,7 +12,8 @@ public class PlayerControl : MonoBehaviour
 
     public GameObject Bullet;
     public GameObject healthBarUI;
-    //public GameObject footstep;
+    public GameObject footstep;
+    public GameObject gun;
 
     public Transform spawnPosition;
 
@@ -32,13 +33,13 @@ public class PlayerControl : MonoBehaviour
 
     private Animator animGun;
 
-    //public static AudioSource playerAudioSource;
-
-    //public AudioClip footsteps;
+    public AudioSource footstepAudioSource;
+    public AudioSource gunAudioSource;
 
     private void Awake()
     {
-        //playerAudioSource = GetComponent<AudioSource>();
+        footstepAudioSource = GetComponentInChildren<AudioSource>();
+        gunAudioSource = GetComponentInChildren<AudioSource>();
         playerRb = GetComponent<Rigidbody>();
         animGun = GetComponentInChildren<Animator>();
     }
@@ -47,6 +48,8 @@ public class PlayerControl : MonoBehaviour
     {
         health = maxHealth;
         slider.value = CalculateHealth();
+
+        footstep.SetActive(false);
 
         if (viewCursor)
         {
@@ -68,14 +71,14 @@ public class PlayerControl : MonoBehaviour
 
         transform.Translate(movementZ, 0, movementX);
 
-        //if ((movementX != 0 || movementZ != 0) && isGrounded)
-        //{
-        //    playerAudioSource.Play(footsteps);
-        //}
-        //else
-        //{
-        //    playerAudioSource.Stop();
-        //}
+        if ((movementX != 0 || movementZ != 0) && isGrounded)
+        {
+            footstep.SetActive(true);
+        }
+        else
+        {
+            footstep.SetActive(false);
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -86,11 +89,13 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
         {
             velocityMovement = velocityMovement * 1.5f;
+            footstep.GetComponent<AudioSource>().pitch = 1.5f;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             velocityMovement = 10f;
+            footstep.GetComponent<AudioSource>().pitch = 1f;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -101,6 +106,9 @@ public class PlayerControl : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
                 viewCursor = false;
             }
+
+            
+
             BulletInstance();
         }
 
@@ -142,6 +150,8 @@ public class PlayerControl : MonoBehaviour
         }
 
         animGun.Play("recoil");
+
+        gun.GetComponent<AudioSource>().Play();
 
         GameObject bulletClone = Instantiate(Bullet, spawnPosition.position, spawnPosition.rotation);
 

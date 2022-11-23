@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 public class EnemyControl : MonoBehaviour
 {
@@ -28,11 +29,16 @@ public class EnemyControl : MonoBehaviour
 
     private NavMeshAgent enemyAgent;
 
+    private AudioSource enemyAudioSource;
+    public AudioClip[] audioClips;
+
+
     void Start()
     {
         health = maxHealth;
         slider.value = CalculateHealth();
 
+        enemyAudioSource = GetComponent<AudioSource>();
         enemyAgent = GetComponent<NavMeshAgent>();
         enemyRb = GetComponentInChildren<Rigidbody>();
         animEnemy = GetComponent<Animator>();
@@ -51,12 +57,12 @@ public class EnemyControl : MonoBehaviour
             healthBarUI.SetActive(true);
         }
 
-        if (health <= 0)
-        {
-            GameManager.Instance.enemyCount();
-            animEnemy.SetTrigger("dying");
-            Destroy(gameObject);
-        }
+        //if (health <= 0)
+        //{
+        //    GameManager.Instance.enemyCount();
+        //    animEnemy.SetTrigger("dying");
+        //    Destroy(gameObject);
+        //}
 
         ComportamientoEnemigo();
     }
@@ -110,6 +116,8 @@ public class EnemyControl : MonoBehaviour
             }
             else
             {
+                enemyAudioSource.clip = audioClips[1];
+                enemyAudioSource.Play();
                 animEnemy.SetBool("walking", false);
                 animEnemy.SetBool("attack", true);
                 attacking = true;
@@ -119,12 +127,28 @@ public class EnemyControl : MonoBehaviour
        
     }
 
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
+    }
+
     public void EndAnimation()
     {
-        Debug.Log("Evento activado");
         animEnemy.SetBool("walking", true);
         animEnemy.SetBool("attack", false);
         attacking = false;
+    }
+
+    private void Step()
+    {
+        enemyAudioSource.clip = audioClips[0];
+        enemyAudioSource.Play();
+    }
+
+    private void Death()
+    {
+        enemyAudioSource.clip = audioClips[2];
+        enemyAudioSource.Play();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -132,6 +156,16 @@ public class EnemyControl : MonoBehaviour
         if (collision.gameObject.CompareTag("bullet"))
         {
             health = health - 25;
+
+            if (health <= 0)
+            {
+                GameManager.Instance.enemyCount();                
+                enemyAgent.isStopped = true;
+                healthBarUI.SetActive(false);
+                animEnemy.SetTrigger("dying");                
+                Invoke("DestroyEnemy", 3f);
+            }
+
             Destroy(collision.gameObject);
         }
     }
