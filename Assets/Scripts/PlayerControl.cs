@@ -26,18 +26,36 @@ public class PlayerControl : MonoBehaviour
     public float cdBullet = 0.25f;
     public float velocityMovement = 10.0f;
     public float bulletForce;
+    public float damage = 25;
+
+    public int progress = 0;
 
     private Rigidbody playerRb;
 
     public Slider slider;
+    public Slider gunHabSlider;
 
     private Animator animGun;
 
     public AudioSource footstepAudioSource;
     public AudioSource gunAudioSource;
 
+    private static PlayerControl _instance;
+    public static PlayerControl Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("Instance exists");
+            }
+            return _instance;
+        }
+    }
+
     private void Awake()
     {
+        _instance = this;
         footstepAudioSource = GetComponentInChildren<AudioSource>();
         gunAudioSource = GetComponentInChildren<AudioSource>();
         playerRb = GetComponent<Rigidbody>();
@@ -46,6 +64,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+
         health = maxHealth;
         slider.value = CalculateHealth();
 
@@ -61,6 +80,9 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        slider.value = CalculateHealth();
+
+
         cdBullet -= Time.deltaTime;
 
         float movementX = Input.GetAxis("Vertical") * velocityMovement; 
@@ -112,6 +134,13 @@ public class PlayerControl : MonoBehaviour
             BulletInstance();
         }
 
+        if (Input.GetKeyDown("q") && progress >= 8)
+        {
+            damage = 100;
+            progress = 0;
+            gunHabSlider.value = progress;
+        }
+
         if (Input.GetKeyDown("escape"))
         {
             if (!viewCursor)
@@ -121,7 +150,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        slider.value = CalculateHealth();
+
 
         if (health < maxHealth)
         {
@@ -141,6 +170,12 @@ public class PlayerControl : MonoBehaviour
         return health / maxHealth;
     }
 
+    public void UpdateProgress()
+    {
+        progress++;
+        gunHabSlider.value = progress;
+    }
+
     private void BulletInstance()
     {
         
@@ -152,6 +187,7 @@ public class PlayerControl : MonoBehaviour
         animGun.Play("recoil");
 
         gun.GetComponent<AudioSource>().Play();
+
 
         GameObject bulletClone = Instantiate(Bullet, spawnPosition.position, spawnPosition.rotation);
 

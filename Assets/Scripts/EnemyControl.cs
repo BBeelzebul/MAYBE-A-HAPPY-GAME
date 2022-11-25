@@ -13,11 +13,12 @@ public class EnemyControl : MonoBehaviour
     public float grade;
     public float health;
     public float maxHealth;
+    
 
     public bool attacking;
 
     public Quaternion angle;
-
+    
     private GameObject player;
     public GameObject healthBarUI;
 
@@ -57,12 +58,6 @@ public class EnemyControl : MonoBehaviour
             healthBarUI.SetActive(true);
         }
 
-        //if (health <= 0)
-        //{
-        //    GameManager.Instance.enemyCount();
-        //    animEnemy.SetTrigger("dying");
-        //    Destroy(gameObject);
-        //}
 
         ComportamientoEnemigo();
     }
@@ -127,11 +122,6 @@ public class EnemyControl : MonoBehaviour
        
     }
 
-    public void DestroyEnemy()
-    {
-        Destroy(gameObject);
-    }
-
     public void EndAnimation()
     {
         animEnemy.SetBool("walking", true);
@@ -151,18 +141,33 @@ public class EnemyControl : MonoBehaviour
         enemyAudioSource.Play();
     }
 
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
+        GameManager.Instance.enemyCount();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("bullet"))
         {
-            health = health - 25;
+            
+            health = health - PlayerControl.Instance.damage;
+
+            if(PlayerControl.Instance.damage == 100)
+            {
+                PlayerControl.Instance.damage = 25;
+            }
+            else
+            {
+                PlayerControl.Instance.UpdateProgress();
+            }
 
             if (health <= 0)
             {
-                GameManager.Instance.enemyCount();                
                 enemyAgent.isStopped = true;
                 healthBarUI.SetActive(false);
-                animEnemy.SetTrigger("dying");                
+                animEnemy.SetTrigger("dying");
                 Invoke("DestroyEnemy", 3f);
             }
 
