@@ -22319,30 +22319,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 219617732}
-  Enemy: {fileID: 120508865115260446, guid: e5ca50662a58c504aae52235ab0a3360, type: 3}
+  Enemy: {fileID: 1645498363092072163, guid: a1a578846fac253439571bc08b0a9f72, type: 3}
   enemyList: []
   enemiesPosition:
-  - {x: -125, y: -1.7, z: 62}
-  - {x: -125, y: -1.7, z: 70}
-  - {x: 143, y: -1.7, z: 60}
-  - {x: 144, y: -1.7, z: 70}
-  - {x: 14, y: -1.7, z: 37}
-  - {x: 2, y: -1.7, z: 37}
-  - {x: 17, y: -1.7, z: -33}
-  - {x: 2, y: -1.7, z: -33}
-  - {x: 95, y: -1.7, z: 27}
-  - {x: 98, y: -1.7, z: 30}
-  - {x: 100, y: -1.7, z: -16}
-  - {x: -80, y: -1.7, z: -27}
-  - {x: -83, y: -1.7, z: 17}
-  - {x: -83, y: -1.7, z: 6}
-  - {x: 132, y: -1.7, z: -74}
-  - {x: 133, y: -1.7, z: -74}
-  - {x: -125, y: -1.7, z: -82}
-  - {x: -123, y: -1.7, z: -73}
-  - {x: 97, y: -1.7, z: -13}
-  - {x: -83, y: -1.7, z: -44}
-  remainingTime: 120
+  - {x: 8, y: 1, z: 3}
+  remainingTime: 180
   totalEnemies: 0
   timeLeft: {fileID: 1320913375}
   enemiesLeft: {fileID: 1835874168}
@@ -48092,7 +48073,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144430036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.853807, y: 42.7, z: 132.52963}
+  m_LocalPosition: {x: 0.853807, y: 41.8, z: 132.52963}
   m_LocalScale: {x: -29.3, y: 1, z: -24.22}
   m_ConstrainProportionsScale: 0
   m_Children:

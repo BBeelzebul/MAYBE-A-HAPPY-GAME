@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public float remainingTime;
     public int totalEnemies;
     private int minutes, seconds;
+    private bool oleada1 = false;
+    private bool oleada2 = false;
+    private bool oleada3 = false;
 
     public TextMeshProUGUI timeLeft;
     public TextMeshProUGUI enemiesLeft;
@@ -47,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
         remainingTime -= Time.deltaTime;
 
         if(remainingTime < 0) remainingTime = 0;
@@ -61,11 +65,37 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("GameOver");
         }
-        if(totalEnemies == 0)
+        if(totalEnemies == 30)
         {
             SceneManager.LoadScene("Win");
         }
+
+        if(remainingTime <= 170f && !oleada1)
+        {
+            oleada1 = true;
+            for (int i = 0; i < 10; i++)
+            {
+                enemyList.Add(Instantiate(Enemy, enemiesPosition[0], Quaternion.identity));
+            }
+        }
+        if (remainingTime <= 130f && !oleada2)
+        {
+            oleada2 = true;
+            for (int i = 0; i < 10; i++)
+            {
+                enemyList.Add(Instantiate(Enemy, enemiesPosition[0], Quaternion.identity));
+            }
+        }
+        if(remainingTime <= 80f && !oleada3)
+        {
+            oleada3 = true;
+            for (int i = 0; i < 10; i++)
+            {
+                enemyList.Add(Instantiate(Enemy, enemiesPosition[0], Quaternion.identity));
+            }
+        }
     }
+
 
     void gameStart()
     {
@@ -78,20 +108,15 @@ public class GameManager : MonoBehaviour
             }         
         }
 
-        for (int i = 0; i < 20; i++)
-        {
-            enemyList.Add(Instantiate(Enemy, enemiesPosition[i], Quaternion.identity));
-        }
-
-        totalEnemies = enemyList.Count;
-        enemiesLeft.text = $"{totalEnemies}";
+        totalEnemies = 0;
+        enemiesLeft.text = $"{totalEnemies}/30";
        
     }
 
     public void enemyCount()
     {
-        totalEnemies--;
-        enemiesLeft.text = $"{totalEnemies}";
+        totalEnemies++;
+        enemiesLeft.text = $"{totalEnemies}/30";
     }
 
 }
