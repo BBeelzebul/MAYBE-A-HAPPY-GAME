@@ -111,7 +111,6 @@ GameObject:
   m_Component:
   - component: {fileID: 785863292572359844}
   - component: {fileID: 6631513431884596958}
-  - component: {fileID: 1908932491423552108}
   - component: {fileID: 4168736982566271899}
   - component: {fileID: 4094788227851295612}
   - component: {fileID: 4796913437174477177}
@@ -161,31 +160,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1908932491423552108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 120508865115260446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c2507d973b44e045bcb2f123f3dbf05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rutine: 0
-  cronometro: 0
-  grade: 0
-  health: 0
-  maxHealth: 100
-  attacking: 0
-  angle: {x: 0, y: 0, z: 0, w: 0}
-  healthBarUI: {fileID: 114617534348085349}
-  slider: {fileID: 3462089499633068238}
-  audioClips:
-  - {fileID: 8300000, guid: 49acbbf9a45b9b84087017a090c2892a, type: 3}
-  - {fileID: 8300000, guid: d03f9c2cf676409409facbf8cedf5e6a, type: 3}
-  - {fileID: 8300000, guid: 54960fff32d828c439fe769fb5673333, type: 3}
 --- !u!195 &4168736982566271899
 NavMeshAgent:
   m_ObjectHideFlags: 0

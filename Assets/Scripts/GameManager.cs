@@ -20,10 +20,14 @@ public class GameManager : MonoBehaviour
     private bool oleada1 = false;
     private bool oleada2 = false;
     private bool oleada3 = false;
+    private bool dialogo2 = false;
+    private bool dialogo3 = false;
 
     public TextMeshProUGUI timeLeft;
     public TextMeshProUGUI enemiesLeft;
 
+    private AudioSource gmAudioSource;
+    public AudioClip[] audioClips;
     
     private static GameManager _instance;
     public static GameManager Instance
@@ -41,11 +45,14 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        gmAudioSource = GetComponent<AudioSource>();
     }
 
     void Start()
     {
-        gameStart();    
+        gameStart();
+        gmAudioSource.clip = audioClips[0];
+        gmAudioSource.Play();
     }
 
     void Update()
@@ -75,23 +82,39 @@ public class GameManager : MonoBehaviour
             oleada1 = true;
             for (int i = 0; i < 10; i++)
             {
-                enemyList.Add(Instantiate(Enemy, enemiesPosition[0], Quaternion.identity));
+                enemyList.Add(Instantiate(Enemy, enemiesPosition[i], Quaternion.identity));
             }
         }
-        if (remainingTime <= 130f && !oleada2)
+
+        if(totalEnemies == 10 && !dialogo2)
+        {
+            dialogo2 = true;
+            gmAudioSource.clip = audioClips[1];
+            gmAudioSource.Play();
+        }
+
+        if (remainingTime <= 120f && !oleada2)
         {
             oleada2 = true;
             for (int i = 0; i < 10; i++)
             {
-                enemyList.Add(Instantiate(Enemy, enemiesPosition[0], Quaternion.identity));
+                enemyList.Add(Instantiate(Enemy, enemiesPosition[i], Quaternion.identity));
             }
         }
-        if(remainingTime <= 80f && !oleada3)
+
+        if(totalEnemies == 20 && !dialogo3)
+        {
+            dialogo3 = true;
+            gmAudioSource.clip = audioClips[2];
+            gmAudioSource.Play();
+        }
+
+        if(remainingTime <= 70f && !oleada3)
         {
             oleada3 = true;
             for (int i = 0; i < 10; i++)
             {
-                enemyList.Add(Instantiate(Enemy, enemiesPosition[0], Quaternion.identity));
+                enemyList.Add(Instantiate(Enemy, enemiesPosition[i], Quaternion.identity));
             }
         }
     }
